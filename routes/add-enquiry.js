@@ -12,7 +12,7 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY
 // Nodemailer setup
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST || 'mail.spraditech.ng',
-  port: process.env.EMAIL_PORT || 465,
+  port: process.env.EMAIL_PORT || 587,
   auth: {
     user: process.env.EMAIL_USER || 'info@spraditech.ng',
     pass: process.env.EMAIL_PASS || '@Pijaya2026'
