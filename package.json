@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "redis:start": "redis-server",
+    "redis:stop": "redis-cli shutdown"
   },
   "keywords": [],
   "author": "",
@@ -13,13 +17,17 @@
     "@supabase/supabase-js": "^2.90.1",
     "@types/nodemailer": "^7.0.5",
     "body-parser": "^2.2.2",
+    "bullmq": "^5.66.6",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "http-errors": "^2.0.1",
+    "ioredis": "^5.9.2",
     "morgan": "^1.10.1",
     "nodemailer": "^7.0.12",
-    "path": "^0.12.7"
+    "nodemon": "^3.1.11",
+    "path": "^0.12.7",
+    "resend": "^6.8.0"
   }
 }

@@ -1,6 +1,24 @@
 version: "3.8"
 
 services:
+  redis:
+    image: redis:7-alpine
+    container_name: spraditech-redis
+    restart: always
+    ports:
+      - "6380:6379"  # Keep using 6380 to avoid conflicts
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - spraditech-network
+    # Add healthcheck to ensure Redis is ready
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
   backend:
     build: .
     container_name: spraditech-backend
@@ -9,3 +27,70 @@ services:
     env_file:
       - .env
     restart: always
+    depends_on:
+      redis:
+        condition: service_healthy  # Wait for Redis to be healthy
+    networks:
+      - spraditech-network
+    # Add environment variables to override .env if needed
+    environment:
+      - REDIS_HOST=redis  # Explicitly set Redis host
+      - REDIS_PORT=6379
+      - NODE_ENV=development
+
+networks:
+  spraditech-network:
+    driver: bridge
+    # Add explicit name to avoid Docker Desktop issues
+    name: spraditech-network
+
+volumes:
+  redis_data:
+
+
+# version: "3.8"
+
+# services:
+#   redis:
+#     image: redis:7-alpine
+#     container_name: spraditech-redis
+#     restart: always
+#     ports:
+#       - "6379:6379"
+#     # Optional: add a volume to persist data if the container restarts
+#     # volumes:
+#     #   - redis_data:/data
+
+#   backend:
+#     build: .
+#     container_name: spraditech-backend
+#     ports:
+#       - "4000:4000"
+#     env_file:
+#       - .env
+#     restart: always
+#     depends_on:
+#       - redis # Ensures Redis starts before the backend
+#     # Ensure your app can communicate with the Redis container
+#     extra_hosts:
+#       - "host.docker.internal:host-gateway"
+
+
+
+
+# Uncomment the volume if you add it to the redis service above
+# volumes:
+#   redis_data:
+
+
+# version: "3.8"
+
+# services:
+#   backend:
+#     build: .
+#     container_name: spraditech-backend
+#     ports:
+#       - "4000:4000"
+#     env_file:
+#       - .env
+#     restart: always
