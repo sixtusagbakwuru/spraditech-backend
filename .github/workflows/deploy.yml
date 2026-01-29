@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /var/www/spraditech-backend
+            cd /home/spraditech/apps/spraditech-backend
             git pull origin main
             docker compose down
             docker compose up -d --build
