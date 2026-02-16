@@ -16,6 +16,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.90.1",
     "@types/nodemailer": "^7.0.5",
+    "bcryptjs": "^3.0.3",
     "body-parser": "^2.2.2",
     "bullmq": "^5.66.6",
     "cookie-parser": "^1.4.7",
@@ -24,6 +25,7 @@
     "express": "^5.2.1",
     "http-errors": "^2.0.1",
     "ioredis": "^5.9.2",
+    "jsonwebtoken": "^9.0.3",
     "morgan": "^1.10.1",
     "nodemailer": "^7.0.12",
     "nodemon": "^3.1.11",

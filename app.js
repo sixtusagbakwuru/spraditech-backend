@@ -14,6 +14,12 @@ var apiEnquiriesRoute = require('./routes/api/enquiries');
 // Add these imports
 var analyticsRoutes = require('./routes/api/analytics');
 var webhookRoutes = require('./webhooks/resendWebhook');
+var enrollmentRoutes = require('./routes/api/enrollment');
+var authRoutes = require('./routes/api/auth');
+var protectedRoutes = require('./routes/api/protected');
+var dashboardRoutes = require('./routes/api/dashboard');
+var forgotPasswordRoutes = require('./routes/api/forgotPassword');
+var assignmentRoutes = require('./routes/api/assignments');
 
 // Import the email worker
 require('./workers/emailWorker');
@@ -50,6 +56,12 @@ app.use('/api/enquiries', apiEnquiriesRoute);
 // Add these to your routes
 app.use('/api/analytics', analyticsRoutes);
 app.use('/webhooks', webhookRoutes);
+app.use('/api/enrollment', enrollmentRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/protected', protectedRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/forgot-password', forgotPasswordRoutes);
+app.use('/api/assignments', assignmentRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
