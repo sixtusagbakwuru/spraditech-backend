@@ -2,9 +2,9 @@ const jwt = require('jsonwebtoken');
 
 class JWTConfig {
   constructor() {
-    this.secret = process.env.JWT_SECRET;
-    this.refreshSecret = process.env.JWT_REFRESH_SECRET || this.secret + 'refresh';
-    this.accessTokenExpiry = process.env.JWT_ACCESS_EXPIRY || '15m'; // 15 minutes
+    this.secret = process.env.JWT_SECRET || "a9f7c4e6d82b5a1f9e3c7d4b2a6f8e1c3d5b7a9e2c4f6d8b1a3c5e7f9d2b4a6c8e1f3d5b7a9c2e4f6d8b1a3c5e7f9d2";
+    this.refreshSecret = process.env.JWT_REFRESH_SECRET || "6c3e9a4d8f2b7c1e5a9d3f6b8c2e7a1f4d9c6b3e8f2a7d1c5e9b4f6a2d8c3e7f1a5d9c2b6e8f4a7c1d3b5e9f2a6c8d4" || this.secret + 'refresh';
+    this.accessTokenExpiry = process.env.JWT_ACCESS_EXPIRY || '50m'; // 50 minutes
     this.refreshTokenExpiry = process.env.JWT_REFRESH_EXPIRY || '7d'; // 7 days
   }
 

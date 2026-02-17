@@ -387,7 +387,7 @@ class AuthController {
       // Generate reset token
       const resetToken = jwt.sign(
         { sub: user.id, type: 'password-reset' },
-        process.env.JWT_SECRET,
+        process.env.JWT_SECRET || "a9f7c4e6d82b5a1f9e3c7d4b2a6f8e1c3d5b7a9e2c4f6d8b1a3c5e7f9d2b4a6c8e1f3d5b7a9c2e4f6d8b1a3c5e7f9d2",
         { expiresIn: '1h' }
       );
 
@@ -395,7 +395,8 @@ class AuthController {
       // You might want to create a password_resets table
 
       // Send password reset email
-      const resetLink = `${process.env.APP_URL}/reset-password?token=${resetToken}`;
+      const appUrl = process.env.APP_URL || "https://spraditech.ng"
+      const resetLink = `${appUrl}/reset-password?token=${resetToken}`;
       
       await emailService.sendEmail({
         to: user.email,
@@ -437,7 +438,7 @@ class AuthController {
       // Verify reset token
       let decoded;
       try {
-        decoded = jwt.verify(token, process.env.JWT_SECRET);
+        decoded = jwt.verify(token, process.env.JWT_SECRET || "a9f7c4e6d82b5a1f9e3c7d4b2a6f8e1c3d5b7a9e2c4f6d8b1a3c5e7f9d2b4a6c8e1f3d5b7a9c2e4f6d8b1a3c5e7f9d2");
       } catch (error) {
         return res.status(400).json({
           success: false,

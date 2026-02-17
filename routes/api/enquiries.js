@@ -3,8 +3,8 @@ const { createClient } = require('@supabase/supabase-js');
 const router = express.Router();
 
 const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY
+  process.env.SUPABASE_URL || "https://uyeevhfdfzqupnwrtjqk.supabase.co",
+  process.env.SUPABASE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV5ZWV2aGZkZnpxdXBud3J0anFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgyODQzNjIsImV4cCI6MjA1Mzg2MDM2Mn0.4htFgWEprmsKTO40bgLsNZ1dkZCyShmgDguMu1CXjdE"
 );
 
 // GET all enquiries (with filtering and pagination) - FIXED

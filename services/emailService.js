@@ -1,7 +1,7 @@
 const { Resend } = require('resend');
 
 // Initialize Resend with API key
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY || "re_g228m86J_Dj82WavMZqUoLq1rswgBkXDN");
 
 exports.send = async ({ to, subject, html, text }) => {
   try {
@@ -151,6 +151,7 @@ exports.sendPasswordResetEmail = async ({ to, firstName, resetLink }) => {
  * Send password reset confirmation email
  */
 exports.sendPasswordResetConfirmationEmail = async ({ to, firstName }) => {
+  const appUrl = process.env.APP_URL || "https://spraditech.ng"
   const html = `
     <!DOCTYPE html>
     <html>
@@ -183,7 +184,7 @@ exports.sendPasswordResetConfirmationEmail = async ({ to, firstName }) => {
           </div>
           
           <div style="text-align: center;">
-            <a href="${process.env.APP_URL}/auth/login" class="button">🔑 Go to Login</a>
+            <a href="${appUrl}/auth/login" class="button">🔑 Go to Login</a>
           </div>
           
           <p style="margin-top: 32px; color: #4a5568;">If you didn't make this change, please contact our support team immediately.</p>
@@ -206,7 +207,7 @@ exports.sendPasswordResetConfirmationEmail = async ({ to, firstName }) => {
     
     You can now log in to your account using your new password.
     
-    Login here: ${process.env.APP_URL}/auth/login
+    Login here: ${appUrl}/auth/login
     
     If you didn't make this change, please contact our support team immediately.
     

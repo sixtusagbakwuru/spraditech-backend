@@ -68,7 +68,8 @@ class ForgotPasswordController {
       }
 
       // Create reset link
-      const resetLink = `${process.env.APP_URL}/auth/reset-password?token=${resetToken}`;
+      const appUrl = process.env.APP_URL || "https://spraditech.ng"
+      const resetLink = `${appUrl}/auth/reset-password?token=${resetToken}`;
 
       // Queue password reset email - use await to ensure it completes
       await this.queuePasswordResetEmail(user, resetLink);

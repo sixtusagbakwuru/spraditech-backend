@@ -140,7 +140,7 @@ class EnrollmentEmailService {
    * Queue admin notification email
    */
   async queueAdminNotificationEmail(enrollmentData, metadata) {
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@spraditech.ng';
+    const adminEmail = process.env.ADMIN_EMAIL || 'info@spraditech.ng';
     const emailContent = this.generateAdminNotificationEmail(enrollmentData, metadata);
     
     const eventsHistory = [{
@@ -278,10 +278,11 @@ class EnrollmentEmailService {
    * Generate welcome email content
    */
   generateWelcomeEmailContent(data, password) {
+    const appUrl = process.env.APP_URL || "https://spraditech.ng"
     return {
       subject: 'Welcome to Spraditech - Your Account Has Been Created',
       html: this.generateWelcomeEmailHTML(data, password),
-      text: `Welcome to Spraditech! Your account has been created successfully.\n\nEmail: ${data.email}\nPassword: ${password}\n\nLogin here: ${process.env.APP_URL}/login`
+      text: `Welcome to Spraditech! Your account has been created successfully.\n\nEmail: ${data.email}\nPassword: ${password}\n\nLogin here: ${appUrl}/login`
     };
   }
 
@@ -289,10 +290,11 @@ class EnrollmentEmailService {
    * Generate free course enrollment email content
    */
   generateFreeCourseEmailContent(data) {
+    const appUrl = process.env.APP_URL || "https://spraditech.ng"
     return {
       subject: 'Free Course Enrollment Confirmed - Welcome to Spraditech!',
       html: this.generateFreeCourseEmailHTML(data),
-      text: `Your enrollment in ${data.course} has been confirmed!\n\nYour course is now active and you can access it immediately from your dashboard.\n\nDashboard: ${process.env.APP_URL}/dashboard/my-courses`
+      text: `Your enrollment in ${data.course} has been confirmed!\n\nYour course is now active and you can access it immediately from your dashboard.\n\nDashboard: ${appUrl}/dashboard/my-courses`
     };
   }
 
@@ -302,6 +304,7 @@ class EnrollmentEmailService {
   generateAdminNotificationEmail(data, metadata) {
     const enrollmentType = metadata.isFree ? 'FREE COURSE' : 'PAID COURSE';
     const userType = metadata.isNewUser ? 'NEW USER' : 'EXISTING USER';
+    const appUrl = process.env.APP_URL || "https://spraditech.ng"
     
     return {
       subject: `New Enrollment: ${data.course} - ${data.firstName} ${data.lastName} (${enrollmentType})`,
@@ -317,7 +320,7 @@ class EnrollmentEmailService {
         User Type: ${userType}
         Enrollment ID: ${metadata.enrollmentId}
         
-        View details: ${process.env.APP_URL}/admin/enrollments/${metadata.enrollmentId}
+        View details: ${appUrl}/admin/enrollments/${metadata.enrollmentId}
       `
     };
   }
@@ -345,6 +348,7 @@ class EnrollmentEmailService {
    * Generate enrollment activation email content
    */
   generateEnrollmentActivationEmail(userData, enrollmentData) {
+    const appUrl = process.env.APP_URL || "https://spraditech.ng"
     return {
       subject: `Your ${enrollmentData.course_name} Course is Now Active!`,
       html: this.generateEnrollmentActivationHTML(userData, enrollmentData),
@@ -353,7 +357,7 @@ class EnrollmentEmailService {
         
         You now have full access to all course materials.
         
-        Start learning: ${process.env.APP_URL}/dashboard/courses/${enrollmentData.course_id}
+        Start learning: ${appUrl}/dashboard/courses/${enrollmentData.course_id}
       `
     };
   }
@@ -362,6 +366,7 @@ class EnrollmentEmailService {
    * HTML Template: Welcome Email
    */
   generateWelcomeEmailHTML(data, password) {
+    const appUrl = process.env.APP_URL || "https://spraditech.ng"
     return `
       <!DOCTYPE html>
       <html>
@@ -405,7 +410,7 @@ class EnrollmentEmailService {
             <p style="font-size: 16px;">You can now access your student dashboard and track your enrollment progress.</p>
             
             <div style="text-align: center;">
-              <a href="${process.env.APP_URL}/login" class="button">🚀 Login to Dashboard</a>
+              <a href="${appUrl}/login" class="button">🚀 Login to Dashboard</a>
             </div>
             
             <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #e2e8f0;">
@@ -426,6 +431,7 @@ class EnrollmentEmailService {
    * HTML Template: Free Course Enrollment Confirmation
    */
   generateFreeCourseEmailHTML(data) {
+    const appUrl = process.env.APP_URL || "https://spraditech.ng"
     return `
       <!DOCTYPE html>
       <html>
@@ -477,7 +483,7 @@ class EnrollmentEmailService {
             </ul>
             
             <div style="text-align: center;">
-              <a href="${process.env.APP_URL}/dashboard/my-courses" class="button">📚 Access Your Course →</a>
+              <a href="${appUrl}/dashboard/my-courses" class="button">📚 Access Your Course →</a>
             </div>
             
             <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #e2e8f0;">
@@ -500,6 +506,7 @@ class EnrollmentEmailService {
   generateAdminNotificationHTML(data, metadata) {
     const enrollmentType = metadata.isFree ? 'FREE' : 'PAID';
     const userType = metadata.isNewUser ? 'NEW' : 'EXISTING';
+    const appUrl = process.env.APP_URL || "https://spraditech.ng"
     
     return `
       <!DOCTYPE html>
@@ -600,7 +607,7 @@ class EnrollmentEmailService {
             </div>
             
             <div style="text-align: center;">
-              <a href="${process.env.APP_URL}/admin/enrollments/${metadata.enrollmentId}" class="button">🔍 View in Admin Dashboard</a>
+              <a href="${appUrl}/admin/enrollments/${metadata.enrollmentId}" class="button">🔍 View in Admin Dashboard</a>
             </div>
           </div>
           <div class="footer">
@@ -686,6 +693,7 @@ class EnrollmentEmailService {
    * HTML Template: Enrollment Activation
    */
   generateEnrollmentActivationHTML(userData, enrollmentData) {
+    const appUrl = process.env.APP_URL || "https://spraditech.ng"
     return `
       <!DOCTYPE html>
       <html>
@@ -733,7 +741,7 @@ class EnrollmentEmailService {
             </ul>
             
             <div style="text-align: center;">
-              <a href="${process.env.APP_URL}/dashboard/courses/${enrollmentData.course_id}" class="button">🎯 Start Learning Now →</a>
+              <a href="${appUrl}/dashboard/courses/${enrollmentData.course_id}" class="button">🎯 Start Learning Now →</a>
             </div>
             
             <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #e2e8f0;">
