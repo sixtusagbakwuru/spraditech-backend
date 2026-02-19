@@ -17,4 +17,11 @@ router.post('/progress', authenticate, lessonController.getLessonByProgress);
  */
 router.get('/progress/:progressId', authenticate, lessonController.getLessonByProgressId);
 
+/**
+ * @route   POST /api/lessons/progress/update
+ * @desc    Update lesson progress
+ * @access  Private
+ */
+router.post('/progress/update', authenticate, lessonController.updateLessonProgress);
+
 module.exports = router;

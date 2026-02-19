@@ -1,6 +1,93 @@
 const { supabase } = require('../config/supabaseClient');
 
 class LessonController {
+
+    /**
+ * Update lesson progress
+ */
+async updateLessonProgress(req, res) {
+  try {
+    const { userId, progressId, lessonId, courseId, completed } = req.body;
+
+    console.log('Updating lesson progress:', { userId, progressId, lessonId, courseId, completed });
+
+    // Validate required fields
+    if (!userId || !progressId || !lessonId || !courseId || completed === undefined) {
+      return res.status(400).json({
+        success: false,
+        error: 'Missing required fields'
+      });
+    }
+
+    // Verify the user owns this progress record
+    const { data: existingProgress, error: checkError } = await supabase
+      .from('user_lesson_progress')
+      .select('id')
+      .eq('id', progressId)
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (checkError) {
+      console.error('Error checking progress:', checkError);
+      return res.status(500).json({
+        success: false,
+        error: 'Database error'
+      });
+    }
+
+    if (!existingProgress) {
+      return res.status(404).json({
+        success: false,
+        error: 'Progress record not found'
+      });
+    }
+
+    // Update the progress
+    const now = new Date().toISOString();
+    const updates = {
+      completed,
+      updated_at: now
+    };
+
+    if (completed) {
+      updates.completed_at = now;
+    } else {
+      updates.completed_at = null;
+    }
+
+    const { data: updatedProgress, error: updateError } = await supabase
+      .from('user_lesson_progress')
+      .update(updates)
+      .eq('id', progressId)
+      .select()
+      .single();
+
+    if (updateError) {
+      console.error('Error updating progress:', updateError);
+      return res.status(500).json({
+        success: false,
+        error: 'Failed to update progress'
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        userProgress: updatedProgress
+      },
+      message: completed ? 'Lesson marked as complete' : 'Lesson marked as incomplete'
+    });
+
+  } catch (error) {
+    console.error('❌ Update lesson progress error:', error);
+    return res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to update progress'
+    });
+  }
+}
+
+
   /**
    * Get lesson data by progress ID
    */
