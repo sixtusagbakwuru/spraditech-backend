@@ -20,6 +20,7 @@ var protectedRoutes = require('./routes/api/protected');
 var dashboardRoutes = require('./routes/api/dashboard');
 var forgotPasswordRoutes = require('./routes/api/forgotPassword');
 var assignmentRoutes = require('./routes/api/assignments');
+var lessonRoutes = require('./routes/api/lessons');
 
 // Import the email worker
 require('./workers/emailWorker');
@@ -62,6 +63,7 @@ app.use('/api/protected', protectedRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/forgot-password', forgotPasswordRoutes);
 app.use('/api/assignments', assignmentRoutes);
+app.use('/api/lessons', lessonRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
